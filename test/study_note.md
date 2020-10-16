@@ -1,4 +1,4 @@
-## class_20	10.12	数组
+## class_20	数组    10.12
 
 ### 1.获取数组长度
 
@@ -8,7 +8,7 @@ int len = sizeof(arr)/sizeof(arr[0]);
 ```
 利用*sizeof*函数获取数组长度。但是**只能用在main函数中**，因为当数组名作为地址传入子函数时只传入了首地址，无法获得整个数组的信息。
 
-## class_22	10.11	地址与指针
+## class_22	地址与指针  10.11
 
 ### 1.传值、传址与传引用
 
@@ -75,7 +75,7 @@ void get_min_max(int arr[], int* max_v, int* min_v, int len)
 }
 ```
 
-## class_23	10.12	数组与指针
+## class_23	数组与指针  10.12
 ```C++
     int num[5] = {0, 1. 2, 3, 4};
     int* p1;
@@ -116,4 +116,21 @@ void get_min_max(int arr[], int* max_v, int* min_v, int len)
     *(num+1) = 1;   //指针法
     *(pnum+1) = 1;
 ```
+
+## class_25 结构体与指针    10.16
+```C++
+    void set_num(student *stu)
+    {
+        static int stunum = 101;
+        stu++ ->num = stunum++;
+        // (*stu++).num = stunum++;
+    }
+```
+
+子函数需要多次计数时，可用*static*定义静态变量。
+
+结构体成员调用元素时使用'.'符号，结构体指针调用时使用'->'符号。
+
+
+
 
