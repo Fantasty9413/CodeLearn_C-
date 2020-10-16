@@ -4,8 +4,8 @@ using namespace std;
 
 enum stusex
 {
-    male,       //男
-    female      //女
+    male = 0,       //男
+    female = 1     //女
 };
 
 struct student
@@ -56,6 +56,6 @@ int main()
     float avg;
     set_grade(stu, avg);
     cout<<"the average grade is "<<avg<<endl;
-    
+
     return 0;
 }
