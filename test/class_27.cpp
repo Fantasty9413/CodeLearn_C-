@@ -2,21 +2,21 @@
 #include <string>
 using namespace std;
 
-char *get_same_string(char* p1, char *p2)
+char* get_same_string(char* p1, char *p2)
 {
-    char* s1 = new char[20];
-    char* s = s1;
+    char* head = new char[20];
+    char* s = head;     //保留内存首地址
     while((*p1 != '\0') || (*p2 != '\0'))
     {
         if(*p1 == *p2)
         {
             *s = *p1;
-            s = s + 2;
+            s ++;
         }
         p1++;
         p2++;
     }
-    return s;
+    return head;
 }
 
 int main()
@@ -30,10 +30,29 @@ int main()
     cout<<a<<endl;
     cout<<*p<<endl;
 
-    char s1[] = "asgfasfafa";
-    char s2[] = "ashdgsfand";
-    char s[20] = {};
-    cout<<get_same_string(s1, s2)<<endl;
+    char s1[] = "afgvasdgd";
+    char s2[] = "afsgaghadg";
+    // char s[20] = {};
+
+    // delete [] head;
+
+    char* ps = get_same_string(s1, s2);
+
+    delete [] ps;
+
+    cout<<*ps<<endl;
+
+    delete [] ps;
+
+    while(*ps != '\0')
+    {
+        cout << *ps++ ;
+    }
+
+    int* test = new int[3]{1,10,100};
+    cout<<endl<<*(test+1)<<endl;
+
+    // delete [] head;
 
     return 0;
 }
