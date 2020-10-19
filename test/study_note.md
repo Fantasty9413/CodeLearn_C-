@@ -195,3 +195,20 @@ new完后内存一直存在，delete才会收回这片内存（即子函数中ne
     int* p = new int[5];
     delete []p;     //收回空间  
 ```
+
+使用delete函数后，**内存空间使用权被收回，但内存里的值依旧存在**！
+
+若是在子函数中开辟了内存，则将指向这片内存的指针返回，然后在main函数中删除相对应的指针就可以达到删除内存的目的了。
+```C++
+    char* functionA()
+    {
+        char* head = new char[20];
+        return head;
+    }
+
+    int main()
+    {
+        char* p = functionA();
+        delete [] p;
+    }
+```
