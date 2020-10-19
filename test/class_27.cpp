@@ -38,11 +38,11 @@ int main()
 
     char* ps = get_same_string(s1, s2);
 
-    delete [] ps;
+    delete [] ps;       //删除了内存，但是内存的值还在
 
     cout<<*ps<<endl;
 
-    delete [] ps;
+    // delete [] ps;
 
     while(*ps != '\0')
     {
