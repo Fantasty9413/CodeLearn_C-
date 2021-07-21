@@ -28,3 +28,30 @@ record learning process of C++
     将鼠标放在方法的函数名上，查看详细注释（同时也可查看输入参数等信息）。若返回值是`Reference to this string`，则就是改变对象属性直接返回；若返回值是`The new string`，则返回新对象。
 
     [参考](https://www.cnblogs.com/tyner/p/11010895.html)
+
+* vector
+
+    类似于数组，可以变长度。
+
+    **迭代器(iterator)**：类似于指针，可以指向容器中的元素.
+
+    `c.begin()`和`c.end()`分别返回指向vector第一个元素的迭代器和指向vector最后一个元素的迭代器。
+
+    迭代器的操作**和指针类似**，可以定义，也可以自加。利用迭代器的移动可以输出整个容器的元素。
+
+    ```C++
+    vector<int>::iterator p2;       // 定义迭代器
+    p2 = number.begin();            // 指向头元素
+    while(p2 != number.end())
+    {
+        cout << *p2 <<' ';
+        p2 ++;                      // 移动到下一元素
+    }
+    cout << endl;
+    ```
+
+    加上`reverse`后可以实现反向迭代器，即从vector的尾部实现上述操作。
+    
+    方法变为`c.rbegin()`和`c.rend()`，定义变为`vector<int>::reverse_iterator rp; `。
+
+    `auto`：自动类型推断。
