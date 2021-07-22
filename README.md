@@ -3,6 +3,8 @@ the learning repository of C++
 
 record learning process of C++
 
+## 1.class
+
 * string类
 
     提供查询是否为空、查询长度和查询特定字符等方法。
@@ -54,4 +56,37 @@ record learning process of C++
     
     方法变为`c.rbegin()`和`c.rend()`，定义变为`vector<int>::reverse_iterator rp; `。
 
-    `auto`：自动类型推断。
+    `auto`：自动类型推断。可以用于代替冗长复杂的命名；在定义模板函数时，用于声明依赖模板参数的变量类型。
+
+
+    ## 2.其他
+
+* Template模板
+
+        模板就是实现**代码重用机制**的一种工具，它可以实现类型参数化，即把类型定义为参数， 从而实现了真正的代码可重用性。
+        
+        模版可以分为两类，一个是函数模版，另外一个是类模版。
+
+     * 函数模板：
+
+            ```C++
+                Template <class或者也可以用typename T>
+                返回类型 函数名（形参表）
+                {//函数定义体 }
+
+                template<typename T> void swap(T &a, T &b) 
+                {
+                    T tmp{a}; 
+                    a = b;
+                    b = tmp;
+                }
+            ```
+
+     * 类模板
+
+            ```C++
+                Template < class或者也可以用typename T > class类名
+                {
+                    // 类定义
+                }
+            ```
