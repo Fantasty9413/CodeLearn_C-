@@ -37,7 +37,7 @@ record learning process of C++
 
     **迭代器(iterator)**：类似于指针，可以指向容器中的元素.
 
-    `c.begin()`和`c.end()`分别返回指向vector第一个元素的迭代器和指向vector最后一个元素的迭代器。
+    `c.begin()`和`c.end()`分别返回指向vector第一个元素的迭代器和指向vector**最后一个元素**的下一个位置的迭代器。
 
     迭代器的操作**和指针类似**，可以定义，也可以自加。利用迭代器的移动可以输出整个容器的元素。
 
@@ -62,9 +62,28 @@ record learning process of C++
 
     `iterator insert(iterator it, int n, const T& x)`插入元素。**插入位置在当前迭代器指向元素之前**。**且迭代器位置会指向到新增的第一个元素**。
 
+    插入至尾部：`v.push_back()`；插入至其他位置：`v.insert()`。
+
     `iterator erase(iterator it)`删除元素。删除位置为当前迭代器指向元素。**删除后迭代器指向删除元素之后的第一个元素**。
 
     `iterator erase(iterator first,iterator last)`删除向量的[first,last)间的元素。last指向的元素不删，**且迭代器更新后指向last**。
+
+    **vector操作表：**
+
+    |操作类型|方法|备注|
+    |:---:|:---:|:---:|
+    | 增 | **`insert()`** | 除开尾部，可以插至任意位置(前插) |
+    |  | `push_back()` | 尾部插入 |
+    | 删 | **`erase()`** | 删除任意位置的元素（迭代器后移） |
+    |  | `pop_back` | 尾部删除 |
+    |  | `clear()` | 删除所有元素 |
+    | 改 | **`at()`** | 更改指定位置的元素的值 |
+    |  | `front()` | 更改头部元素 |
+    |  | `back()` | 更改尾部元素 |
+    |  | `assig()` | 指定位置赋值，会覆盖原向量，**适合用于初始化** |
+    | 查 |  | **借助迭代器`iterator`**，可正向，可反向 |
+    |  | `empty()` | 是否为空 |
+
 
 
     ## 2.其他
