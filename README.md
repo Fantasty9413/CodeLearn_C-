@@ -77,24 +77,23 @@ record learning process of C++
 
      * 函数模板：
 
-            ```C++
-                Template <class或者也可以用typename T>
-                返回类型 函数名（形参表）
-                {//函数定义体 }
-
-                template<typename T> void swap(T &a, T &b) 
-                {
-                    T tmp{a}; 
-                    a = b;
-                    b = tmp;
-                }
-            ```
+        ```C++
+            Template <class或者也可以用typename T>
+            返回类型 函数名（形参表）
+            {//函数定义体 }
+            template<typename T> void swap(T &a, T &b) 
+            {
+                 T tmp{a}; 
+                 a = b;
+                 b = tmp;
+            }
+        ```
 
      * 类模板
 
-            ```C++
-                Template < class或者也可以用typename T > class类名
-                {
-                    // 类定义
-                }
-            ```
+        ```C++
+            Template < class或者也可以用typename T > class类名
+            {
+                // 类定义
+            }
+        ```
