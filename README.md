@@ -97,6 +97,8 @@ record learning process of C++
 
     list的迭代器只定义了++和--操作，不能实现+和-的操作；而vector的迭代器可以＋和-操作。
 
+    其原因是因为**两者支持的迭代器类别不同**，vector支持的是随机访问迭代器；list支持的是双向迭代器。前者所重载的运算符远多于后者，具体参考[迭代器的类别与区别](https://www.cnblogs.com/fenglongyu/p/7699645.html)。
+
     **移动list的迭代器**使用`advance(it, n)`函数。
 
 
