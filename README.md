@@ -99,7 +99,24 @@ record learning process of C++
 
     其原因是因为**两者支持的迭代器类别不同**，vector支持的是随机访问迭代器；list支持的是双向迭代器。前者所重载的运算符远多于后者，具体参考[迭代器的类别与区别](https://www.cnblogs.com/fenglongyu/p/7699645.html)。
 
+    再深层次的原因是两者的**空间分配机制不同**。
+    
+    vector分配的空间是连续的。当就空间满载时，会分配原来大小两倍的空间，并将原空间的内容移动到新空间，因此vector最好提前分配空间以提升效率。vector随机存储效率高，插入效率低，因此不提供push_front()方法。而list的空间是不可以不连续的，这样方便高效率的进行插入、删除等操作。
+
     **移动list的迭代器**使用`advance(it, n)`函数。
+
+    * 合并list
+
+    `l1.merge(l2)`：直接合并l1和l2两个list，**合并后l2变为空**。
+
+    `splice`：可以理解为merge的升级版。起可以指定合并出入至l1的位置；还可以指定需要被合并的list的起始位置。l2中被合并的元素也会为空（相当于是内存上的移动）。
+
+    ```c++
+        list<int> l1, l2;
+        auto it1 = l1.begin();
+        auto it2_s = l2.begin(), it2_e = l2.end();
+        l1.splice(it1, l2, it2_s, it2_e);
+    ```
 
 
     ## 2.其他
