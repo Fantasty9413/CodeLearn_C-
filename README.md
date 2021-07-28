@@ -118,8 +118,23 @@ record learning process of C++
         l1.splice(it1, l2, it2_s, it2_e);
     ```
 
+* deque
 
-    ## 2.其他
+    迭代器：当容器大小发生变化后，**最安全的方法是认为原来的迭代器已失效**，重新赋值使用。
+
+    `insert`与迭代器：
+
+    insert(iterator it,const T& x)与insert(iterator it,int n,const T& x)的插入本身不会迭代器的相对位置，只改变绝对位置（前插元素，**迭代器的index后移，但指向的元素不变**）。而insert函数本身是带返回值的，其返回值是一个迭代器，这个**迭代器指向当前插入元素的第一个元素**。
+
+    当然，有时也不一定会有返回值，还是写的时候要多看**函数的description**。
+
+    `erase`与迭代器：
+
+    erase(iterator it)实现删除，删除完成后，it指向被删除位置之前的元素；返回值指向被删除元素之后的元素。
+
+    erase(iterator it, iterator last)实现删除，删除完成后，it指向**被删除的第一个元素(?)**；返回值指向被删除元素之后的元素。**(还是认为它失效稳妥些)**
+
+## 2.其他
 
 * Template模板
 
