@@ -204,6 +204,16 @@ record learning process of C++
 
 * 类：public、private、protect
 
+    定义成员时不写访问修饰符默认**private**。
+
+    * 不同位置对不同类型的成员的访问权限：
+
+      | 位置\成员类型 | public | protected | private |
+      | :---: | :---: | :---: | :---: |
+      | （当前）类 | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+      | 派生类 | :heavy_check_mark: | :heavy_check_mark: | :x: |
+      | 外部或其他类 | :heavy_check_mark: | :x: | :x: |
+
 * 成员函数
 
 * 构造与析构函数：
@@ -291,6 +301,43 @@ record learning process of C++
     ```
 
     指针加->也可调用成员，相当于对象+.的操作。
+
+* 继承(Inherit)
+
+    * 作用：提高代码的重用性贺提高执行效率。
+
+    * 定义：基类(base-class)和派生类(derived-class)。
+
+    ```c++
+        class derived-class: access-specifier base-class
+        {
+            ...
+        }
+    ```
+
+    * 继承后，**派生类（基于派生类的视角来看）**的成员属性对应表：
+
+      | 继承方式\成员类型 | public | protected | private | 关系变化概括 |
+      | :---: | :---: | :---: | :---: | :---: |
+      | public | public | protected | 无法访问 | 基类的非私有成员在派生类的属性不变 |
+      | protected | protected | protected | 无法访问 | 基类的非私有成员在派生类变为protected |
+      | private | private | private | 无法访问 | 基类的非私有成员在派生类变为private |
+
+      无法访问：继承后的private成员其属性还是基类的private，还是私有（按照访问权限表，其只能在基类内部被访问，其他位置都不能访问），所以在一定程度上可以理解为它没被继承，即private成员**不能也没有**被继承。   
+
+    * 派生类不会继承的内容：
+        1. 基类的构造函数、析构函数和拷贝构造函数。**虽然没有继承， 但是会被调用**，具体规则见[参考](https://www.cnblogs.com/bonelee/p/5825885.html)。
+        2. 基类的重载运算符。
+        3. 基类的友元函数。（不是类的成员）
+
+    * 多继承：
+    ```c++
+        class <派生类名>:<继承方式1><基类名1>,<继承方式2><基类名2>,…
+        {
+        <派生类类体>
+        };
+    ```
+
 
 ## 4.其他
 
