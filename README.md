@@ -338,6 +338,19 @@ record learning process of C++
         };
     ```
 
+* 重载
+
+    * 函数重载：参数个数、类型或者顺序不同。不可以**只有返回值不同**。
+
+    * 运算符重载
+
+        1. 可以作为成员函数也可作为普通函数，定义如下。参数**必须为引用**（？），函数名为operator加运算符的符号，返回值为对象。
+        ```c++
+            class class::operator+ (const class& obj);
+            class operator+ (const class& obj1, const class& obj2);
+        ```
+
+        2. 不可重载的运算符：`.`、`->`、`::`、`sizeof`、`?:`和`#`。
 
 ## 4.其他
 
