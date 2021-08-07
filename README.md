@@ -352,6 +352,47 @@ record learning process of C++
 
         2. 不可重载的运算符：`.`、`->`、`::`、`sizeof`、`?:`和`#`。
 
+* 多态
+
+    多态：概括说就是“一个接口，多种方法”。。
+
+    原理：一般情况下，是静态多态，即在编译器**编译时就确定了对象调用的函数地址**（称为早绑定）。实现动态多态后，可以实现**程序运行时才决定调用机制**的功能（称为迟绑定）。
+
+    实现：**虚函数**。在基类中声明虚函数，关键字`virtual`（基类中声明virtual后，子类中就不用声明了）。
+
+    使用情形：使用基类定义了指针，指针指向了派生类对象的引用，通过指针实现成员调用。
+    ```c++
+        class Shape
+        {
+            virtual int getarea();
+        }
+
+        class Rectangle: public Shape
+        {
+            int gerarea();
+        }
+
+        class Triangle: public Shape
+        {
+            int gerarea();
+        }        
+
+        int main()
+        {
+            Shape* shape;
+            shape = new Rectangle();
+            shape->getarea();
+            shape = new Triangle();
+            shape->getarea();           
+        }
+    ```
+
+    纯虚函数：没有具体功能和实现的虚函数，只是实现一个接口，进行一个形式上的定义，以达到规范的作用。
+    ```c++
+        virtual int getarea() = 0;
+    ```
+
+
 ## 4.其他
 
 * Template模板
