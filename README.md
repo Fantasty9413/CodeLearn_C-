@@ -3,6 +3,17 @@ the learning repository of C++
 
 record learning process of C++
 
+## 0.basic
+
+* 引用（reference）
+
+    类似于别名，与指针相似。可以将引用当成是变量在内存中的第二个标签，**对变量的引用进行操作就等于对变量本身就行操作**。
+
+    引用的特性（引用与指针的区别）
+    1. 引用必须在创建时被初始化。（指针可以任何时候被初始化）
+    2. 不能存在空应用，引用必须连接到一块合法的内存上。（指针可以为空）
+    3. 引用绑定到一个对象上后，就不可以指向或者切换绑定到另外的对象上了。（指针可以切换指向）
+
 ## 1.class
 
 * string类
@@ -338,6 +349,23 @@ record learning process of C++
         };
     ```
 
+    * 构造函数：派生类继承基类后，可以在派生类的构造函数中调用基类的构造函数来实现赋初值。（可以配合参数列表使用）
+    ```c++
+        class Animal
+        {
+            public:
+            Animal(int x, int y);
+        }
+        
+        class Dog: public Animal
+        {
+            public:
+            Dog(int x, int y, int z);
+        }
+        Dog::Dog(int x, int y, int z)Animal(x, y), z(z){}
+    ```
+    
+
 * 重载
 
     * 函数重载：参数个数、类型或者顺序不同。不可以**只有返回值不同**。
@@ -350,7 +378,7 @@ record learning process of C++
             class operator+ (const class& obj1, const class& obj2);
         ```
 
-        2. 不可重载的运算符：`.`、`->`、`::`、`sizeof`、`?:`和`#`。
+        1. 不可重载的运算符：`.`、`->`、`::`、`sizeof`、`?:`和`#`。
 
 * 多态
 
