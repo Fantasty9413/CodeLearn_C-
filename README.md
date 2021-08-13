@@ -55,6 +55,16 @@ record learning process of C++
         delete[] p2;
     ```
 
+* 命名空间
+
+    使用namespace的**目的**是对标识符的名称进行本地化，以避免命名冲突。如第三方库中存在一个stack类，我们在自己的程序中又定义了一个stack类，若是不使用命名空间就会造成冲突，其他的变量、函数和对象也是同理。
+
+    关键字using的用法
+    1. using namespace 空间名称;
+    2. using 空间名称: 成员;
+
+    命名空间可以不连续（即分布在不同的地方，每次新定义namespace{}即往以前的空间中添加内容），也可以相互嵌套。
+
 ## 1.class
 
 * string类
