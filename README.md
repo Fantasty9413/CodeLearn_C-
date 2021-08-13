@@ -65,6 +65,54 @@ record learning process of C++
 
     命名空间可以不连续（即分布在不同的地方，每次新定义namespace{}即往以前的空间中添加内容），也可以相互嵌套。
 
+* 预处理命令
+
+    预处理命令以#开头，是一些指令，指示编译器在实际编译之前所需完成的预处理。**预处理命令后面不带分号;**
+
+    * # define
+
+        宏定义，常用于创建符号常量
+        ```c++
+            # define PI 3.14159
+        ``` 
+
+        也可定义带参数的宏
+        ```c++
+            # define MIN(a, b) (a<b ? a : b)
+        ```
+
+    * 条件编译
+
+        条件编译：用来有选择性的对部分程序源代码进行编译。条件编译的结构和if很相似。
+
+        ```C++
+            # ifdef NULL
+                # define NULL 0
+            # endif
+
+            # ifndef PI
+                # define PI 3.14
+            # endif
+
+            # ifdef DEBUG
+                cerr <<"Variable x = " << x << endl;
+            # endif
+
+            # if 0
+                // 不进行编译的代码
+                std::cout << "it's uncompiled. " << '\n';
+            # endif
+        ```
+
+    * 预定义宏（可以用在打印日志上）
+
+        | 预定义宏 | 描述 |
+        | :---: | :---: |
+        | `__LINE__` | 这会在程序编译时包含当前行号。 |
+        | `__FILE__` | 这会在程序编译时包含当前文件名。 |
+        | `__DATE__` | 这会包含一个形式为 month/day/year 的字符串，它表示把源文件转换为目标代码的日期。 |
+        | `__TIME__` | 这会包含一个形式为 hour:minute:second 的字符串，它表示程序被编译的时间。 |
+
 ## 1.class
 
 * string类
