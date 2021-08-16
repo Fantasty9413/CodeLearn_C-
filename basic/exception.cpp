@@ -25,8 +25,16 @@ int main()
     }
     catch(const std::exception& e)
     {
+        std::cout << "caughted! " << '\n';
         std::cerr << e.what() << '\n';
     }
+    catch (const char* msg) 
+    {
+        std::cout << "caughted! " << '\n';
+        std::cerr << msg << '\n';
+    }
+
+    std::cout << "this is an exception" << '\n';
     
     // *ans = division(x, z);
     // std::cout << "the ans is " << *ans << '\n';

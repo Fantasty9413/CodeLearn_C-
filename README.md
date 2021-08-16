@@ -113,6 +113,39 @@ record learning process of C++
         | `__DATE__` | 这会包含一个形式为 month/day/year 的字符串，它表示把源文件转换为目标代码的日期。 |
         | `__TIME__` | 这会包含一个形式为 hour:minute:second 的字符串，它表示程序被编译的时间。 |
 
+* 异常处理
+
+    关键词：
+    
+        1. `throw`：抛出异常
+        2. `try`：执行可能发生异常的代码，后接catch
+        3. `catch`：用于捕获异常处理异常
+
+    C++提供了标准的异常，定义在<exception>中，并且其以父子类层次结构组织。可以通过继承和重载exception来定义新的异常：
+
+    ```C++
+        struct MyException : public exception
+        {
+            const char * what () const throw ()
+            {
+                return "C++ Exception";
+            }
+        };
+
+        int main()
+        {
+            try
+            {
+                throw MyException();
+            }
+            catch(MyException& e)
+            {
+                std::cout << "MyException caught" << std::endl;
+                std::cout << e.what() << std::endl;
+            }
+        }
+    ```
+
 ## 1.class
 
 * string类
