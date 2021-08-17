@@ -16,6 +16,12 @@ record learning process of C++
 
     引用作为函数返回值：
 
+    * 引用与动态内存分配：
+    
+        引用本质是内存上的整合（链接），用的是同一片内存。
+
+        动态内存分配本质上内存上的分离，就是要新开一片内存来操作，和原来的内容隔离开来。
+
 * 动态内存：
 
     * 创建对象：
@@ -54,6 +60,20 @@ record learning process of C++
         delete p1;
         delete[] p2;
     ```
+
+    * **动态内存分配后的初始化：**
+  
+        对于一般对象、变量和结构体等，分配内存后，**利用`=`进行赋值实际上是一次copy**，即把原来的对象的属性copy到了new的对象中，**原对象的属性发生变化不再影响新对象的属性**。
+        
+        但数组由于是进行内存地址的绑定，因此直接`=`绑定是不符合上述规律的，需要单独copy。
+
+        分配内存后不要更改地址。
+
+        ```C++
+                // 错误示范
+                Book* book2 = new Book();
+                book2 = &book1;
+        ```
 
 * 命名空间
 
@@ -113,6 +133,20 @@ record learning process of C++
         | `__DATE__` | 这会包含一个形式为 month/day/year 的字符串，它表示把源文件转换为目标代码的日期。 |
         | `__TIME__` | 这会包含一个形式为 hour:minute:second 的字符串，它表示程序被编译的时间。 |
 
+    * #和##运算符的**小技巧**
+
+        * #：把相应令牌转换为引号括起来的字符串。**将变量名转换为字符串然后输出**
+  
+            ```C++
+                #define ToString( x ) #x
+            ```
+
+        * ##：用于连接两个令牌。
+
+            ```C++
+                #define Conn(x,y) x##y
+            ```
+
 * 异常处理
 
     关键词：
@@ -145,6 +179,40 @@ record learning process of C++
             }
         }
     ```
+
+* 结构体
+
+    * 结构体的定义：
+
+    ```C++
+        struct struct_name
+        {
+            type name;
+            type name;
+            ...
+        };
+
+        struct Book
+        {
+            std::string title;
+            std::string author;
+            std::string subject;
+            int book_id;
+        };
+    ```
+
+    * 结构体创建：法1：声明结构体时创建（即在分号前给定变量名） 法2：利用结构体名创建。
+
+    ```C++
+        struct struct_name
+        {
+            ...
+        } struct1;
+
+        struct_name struct2;
+    ```
+
+    * 结构体访问：成员访问运算符(.)或者指向结构体的成员运算符(->)（用于指针）。
 
 ## 1.class
 
