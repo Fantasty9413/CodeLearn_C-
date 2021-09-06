@@ -10,7 +10,7 @@ record learning process of C++
     类似于别名，与指针相似。可以将引用当成是变量在内存中的第二个标签，**对变量的引用进行操作就等于对变量本身就行操作**。
 
     * 关键字：`&`，**要和取地址区分开来**。
-    
+
       * 引用是放在等号左边的，`int& p = i`。
       * 取地址是放在右边的，`int* p = &i`。
 
@@ -22,12 +22,34 @@ record learning process of C++
     引用作为函数返回值：
 
     * 引用与动态内存分配：
-    
+
         引用本质是内存上的整合（链接），用的是同一片内存。
 
         动态内存分配本质上内存上的分离，就是要新开一片内存来操作，和原来的内容隔离开来。
 
         不要把动态内存分配和取地址挂钩。
+
+    * 传值、传址和传引用
+
+        * 传值：实参拷贝给形参。复制一个一摸一样的，两不相干。
+        * 传址：传地址，也是传值的一种，传的是变量地址的值，**形参就是地址值**，有了地址就可以操作原变量了。传址可以改变原变量，但传过去的地址值也可以被改变，因此可以加上const关键字来进行保护传过去的地址值，`void Pointer(int* const n)`。
+        * 传引用：传给形参的是实参的引用，两者本质上就是同一对象。
+
+```c++
+void Value(int n);
+void Pointer(int* n);
+void Reference(int& n);
+
+int main()
+{
+	int n = 10;
+	Value(n);
+	Pointer(&n);
+	Reference(n);
+}
+```
+
+
 
 * 动态内存：
 
@@ -147,7 +169,7 @@ record learning process of C++
     * #和##运算符的**小技巧**
 
         * #：把相应令牌转换为引号括起来的字符串。**将变量名转换为字符串然后输出**
-      
+        
             ```C++
                 #define ToString( x ) #x
             ```
@@ -288,7 +310,7 @@ record learning process of C++
     ```
 
     加上`reverse`后可以实现反向迭代器，即从vector的尾部实现上述操作。
-    
+
     方法变为`c.rbegin()`和`c.rend()`，定义变为`vector<int>::reverse_iterator rp; `。
 
     `auto`：自动类型推断。可以用于代替冗长复杂的命名；在定义模板函数时，用于声明依赖模板参数的变量类型。
@@ -320,6 +342,23 @@ record learning process of C++
     |  | `assig()` | 指定位置赋值，会覆盖原向量，**适合用于初始化** |
     | 查 |  | **借助迭代器`iterator`**，可正向，可反向 |
     |  | `empty()` | 是否为空 |
+    | | `find()` | args1:起始位置的迭代器；args2:结束位置的迭代器；args3:要查找的元素。返回值为迭代器位置。 |
+
+    
+
+    	* `find()`用法示例：
+
+    ```c++
+    # include <algorithm>
+    
+    pos = find(stl.begin(), stl.end(), obj);		// 先重载==运算符
+    if(pos != stl.end())
+       std::cout << "get it in stl" << '\n';
+    else
+       std::cout << "not get it in stl" << '\n';
+    ```
+
+    
 
 * list
 
