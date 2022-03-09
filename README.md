@@ -1,7 +1,10 @@
 # CodeLearn_C-
-the learning repository of C++
+🐅the learning repository of C++
 
-record learning process of C++
+🐎record learning process of C++
+
+🚀code time: [![wakatime](https://wakatime.com/badge/github/Fantasty9413/CodeLearn_C-.svg)](https://wakatime.com/badge/github/Fantasty9413/CodeLearn_C-)
+
 
 ## 0.basic
 
