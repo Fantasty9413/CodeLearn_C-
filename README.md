@@ -714,7 +714,139 @@ int main()
     * 设计策略：定义一个抽象基类（提供合适的、通用的、标准化的接口），派生类通过继承抽象基类实现各种操作。
 
 
-## 4.其他
+## 4.线程与进程
+
+* 线程创建：利用Windows API提供的接口来实现多线程。内容参考：[参考1：菜鸟教程]([C++ 多线程 | 菜鸟教程 (runoob.com)](https://www.runoob.com/w3cnote/cpp-multithread-demo.html)) [参考2：CSDN]([(8条消息) Windows下C++多线程编程（入门实例）_a3192048的博客-CSDN博客_windows 多线程](https://blog.csdn.net/a3192048/article/details/82152618))
+
+    * 多线程的实现过程：1.申明线程函数 2.创建线程 3.实现线程。多线程实现过程中会用到的函数：
+    
+        * 线程函数的申明：
+    
+            ```c++
+            DWORD WINAPI ThreadFun(LPVOID lpParameter);    //lpParameter是传入的参数，是一个空指针
+            
+            DWORD WINAPI ThreadFun(LPVOID lpParameter);
+            {
+                ...
+            }
+            ```
+    
+        * 线程的创建：
+    
+            ```c++
+            HANDLE WINAPI CreateThread(
+                LPSECURITY_ATTRIBUTES   lpThreadAttributes, //线程安全相关的属性，常置为NULL
+                SIZE_T                  dwStackSize,        //新线程的初始化栈在大小，可设置为0
+                LPTHREAD_START_ROUTINE  lpStartAddress,     //被线程执行的回调函数，也称为线程函数
+                LPVOID                  lpParameter,        //传入线程函数的参数，不需传递参数时为NULL
+                DWORD                   dwCreationFlags,    //控制线程创建的标志
+                LPDWORD                 lpThreadId          //传出参数，用于获得线程ID，如果为NULL则不返回线程ID
+            );
+            
+            HANDLE hThread = CreateThread(NULL, 0, ThreadFun, NULL, 0, NULL);
+            ```
+    
+        * 句柄的关闭：
+    
+            ```c++
+            BOOL WINAPI CloseHandle(HANDLE hObject);        //关闭一个被打开的对象句柄
+            
+            CloseHandle(hThread);
+            ```
+    
+    * 注意点：
+    
+        * CloseHandle是关闭线程句柄,用来**释放线程资源**的,不是终止线程的。关闭线程句柄只是释放句柄资源，新开启线程后，如果不再利用其句柄，应该关闭句柄，释放系统资源。**关闭线程句柄和线程的结束与否没有关系**。如果主线程只想创建线程，而并不想之后再查询或操纵它，那么就应该及时关闭句柄，防止句柄资源泄露（**句柄资源有限**）。
+    
+* 线程传参：通过线程函数的参数，向子线程传递参数。
+
+    * 线程传参主要的过程：1.参数结构体的定义 2.线程函数中参数的调用 3.线程数据初始化。其中稍微麻烦一点的就是参数结构体的定义，以[参考1：菜鸟教程]([C++ 多线程 | 菜鸟教程 (runoob.com)](https://www.runoob.com/w3cnote/cpp-multithread-demo.html))为例， 给出示例：
+
+        ```c++
+        // 定义线程数据参数结构体
+        typedef struct __THREAD_DATA
+        {
+            int nMaxNum;
+            char strThreadName[NAME_LINE];
+        
+            __THREAD_DATA():nMaxNum(0)
+            {
+                memset(strThreadName, 0, NAME_LINE * sizeof(char));		// 初始化
+            }
+        }THREAD_DATA;
+        
+        // 线程函数
+        DWORD WINAPI SubThread(LPVOID lpParamter)
+        {
+            THREAD_DATA* threaddata = (THREAD_DATA*)lpParamter;			// 线程数据参数
+        
+            for(int i=0; i<threaddata->nMaxNum; i++)
+            {
+                WaitForSingleObject(hMutex, INFINITE);
+                std::cout << "It is in the subthread:" << threaddata->strThreadName << "---" << i << '\n';
+                Sleep(100);
+                ReleaseMutex(hMutex);
+            }
+        
+            return 0L;
+        }
+        
+        int main()
+        {
+        	...
+            // 线程数据参数初始化
+        	THREAD_DATA threaddata1, threaddata2, threaddata3;
+            threaddata1.nMaxNum = 3;
+            strcpy(threaddata1.strThreadName, "SubThread_1");
+            ...
+        }
+        ```
+
+* 线程同步：通过互斥量（Mutex）来实现。
+
+    * 互斥量(Mutex)类似于二元信号量，哪个线程获取了该互斥量，就由哪个线程来释放，其他线程不允许代替释放。这一特点可以用于解决县城对于共享资源的分配问题。
+
+    * 使用互斥量锁进行线程同步的过程：1.创建互斥量锁 2.线程请求互斥量锁 3.线程工作 4.线程释放互斥量锁。这一过程中会用的函数：
+
+      * 互斥量锁创建：
+
+        ```c++
+        HANDLE WINAPI CreateMutex(
+            LPSECURITY_ATTRIBUTES lpMutexAttributes,        //线程安全相关的属性，常置为NULL
+            BOOL                  bInitialOwner,            //创建Mutex时的当前线程是否拥有Mutex的所有权
+            LPCTSTR               lpName                    //Mutex的名称
+        );
+        
+        hMutex = CreateMutex(NULL, FALSE, NULL);
+        ```
+
+      * 互斥量锁请求：
+
+        ```c++
+        DWORD WINAPI WaitForSingleObject(
+            HANDLE hHandle,                             //要获取的锁的句柄
+            DWORD  dwMilliseconds                           //超时间隔
+        );
+        
+        WaitForSingleObject(hMutex, INFINITE);
+        ```
+
+      * 互斥量锁释放：
+
+        ```c++
+        BOOL WINAPI ReleaseMutex(HANDLE hMutex);		// hMutex为所释放的互斥量的句柄
+        
+        ReleaseMutex(hMutex);
+        ```
+
+    * 注意：
+
+      * 互斥量的句柄要先说明，即在开头先申明定义`HANDLE hMutex = NULL`（HANDLE是句柄）。
+      * 在线程中，先进行互斥量锁的请求，再实现线程内容，最后进行互斥量锁的释放。
+
+      
+
+## 5.其他
 
 * Template模板
 
@@ -744,3 +876,13 @@ int main()
                 // 类定义
             }
         ```
+    
+* memset函数
+
+    初始化函数，用于将某一块内存中的内容全部设置为指定值，通常为新申请的内存做初始化工作。
+
+    ```c++
+    void *memset(void *s, int ch, size_t n);		//将s中当前位置后面的n个字节 （typedef unsigned int size_t ）用 ch 替换并返回 s 
+    ```
+
+    
