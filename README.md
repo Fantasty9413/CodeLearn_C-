@@ -125,7 +125,7 @@ int main()
 
     预处理命令以#开头，是一些指令，指示编译器在实际编译之前所需完成的预处理。**预处理命令后面不带分号;**
 
-    * # define
+    * `# define`
 
         宏定义，常用于创建符号常量
         ```c++
@@ -884,5 +884,3 @@ int main()
     ```c++
     void *memset(void *s, int ch, size_t n);		//将s中当前位置后面的n个字节 （typedef unsigned int size_t ）用 ch 替换并返回 s 
     ```
-
-    
