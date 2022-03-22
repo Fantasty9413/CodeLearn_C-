@@ -161,4 +161,106 @@
     * 删除一般节点：pre和next直接连接。
     * 删除尾节点：pre直接指向null，删除cur后，不需要再指回pre。
 
-    
+## 二叉树
+
+* 二叉树的遍历方法：
+
+  * 前序遍历：中左右顺序
+
+    ```c++
+    void PreOrderTraverse(BiTree T)
+    {
+    	if (T ==NULL)
+    	{
+    		return;
+    	}
+    	printf("%c", T->data);		// 显示节点数据，也可改为其他操作
+    	PreOrderTraverse(T->leftchild);
+    	PreOrderTraverse(T->rightchild);
+    }
+    ```
+
+  * 中序遍历：左中右顺序
+
+    ```c++
+    void InOrderTraverse(BiTree T)
+    {
+    	if (T ==NULL)
+    	{
+    		return;
+    	}
+    	InOrderTraverse(T->leftchild);
+    	printf("%c", T->data);		// 显示节点数据，也可改为其他操作	
+    	InOrderTraverse(T->rightchild);
+    }
+    ```
+
+  * 后序遍历：左右中顺序
+
+    ```c++
+    void PostOrderTraverse(BiTree T)
+    {
+    	if (T ==NULL)
+    	{
+    		return;
+    	}
+    	PostOrderTraverse(T->leftchild);
+    	PostOrderTraverse(T->rightchild);
+    	printf("%c", T->data);		// 显示节点数据，也可改为其他操作    
+    }
+    ```
+
+* 二叉树的建立：方法类似于二叉树的遍历，不同的地方是把读取节点数据改为创建节点。
+
+  * 按前序方法建立二叉树：
+
+    ```c++
+    void CreatBiTree(TreeNode** treenode, char *c)       // 前序遍历法创建二叉树
+    {
+        char ch;
+        ch = *c;
+        if(ch == '#')
+        {
+            treenode = nullptr;
+            c = c+1;
+        }
+        else
+        {
+            TreeNode * node = new TreeNode();
+            (*treenode) = node;
+            (*treenode)->val = ch;
+            c = c+1;
+            CreatBiTree(&(*treenode)->left, c);
+            CreatBiTree(&(*treenode)->right, c);
+        }
+    }
+    ```
+
+* 推导遍历结果：通过两种遍历顺序，来确定整个二叉树的构造。方法是利用中序遍历来确定中间节点，利用前序或者后序遍历来确定左右子节点，然后依次递归操作。
+
+* 赫夫曼树：带权路径最短的二叉树。用于**赫夫曼编码**，来解决远距离通信的数据传输的最有问题。其具体原理是按数据出现频率的不同，设计不同长度的编码。
+
+* 树转换为二叉树：1.兄弟节点连线 2.只留长子的连线，删除其他节点的连线
+
+* 线索二叉树：线索化的过程就是在遍历的过程中修改空指针的过程。利用ltag、rtag来确定指针是指向前驱还是后继。
+
+## 数组
+
+### 1.二分查找
+
+* 问题：给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。
+* 思路：通过二分查找，逐渐逼近目标值。[leetcode-704](.\leetcode\array\Search.cpp)
+* 要点：
+  * 利用二分法，当区间中间位置的值大于目标值，区间向左收缩；当区间中间位置的值小于目标值，区间向右收缩。
+  * 二分查找有两种写法，一种是左闭右闭；另一种是左闭右开。两者的比较条件和下标变换方法不一样。
+  * 作答采用**左闭右开**的写法。left起始下标为0，right起始下标为nums.size()（最大下标值+1，因为右区间不取等）。当向左收缩时，right=mid；当向右收缩时，left=mid+1（因为left可以被取到）。
+
+### 2.移除元素
+
+* 问题：给你一个数组 `nums` 和一个值 `val`，你需要原地移除所有数值等于 `val` 的元素，并返回移除后数组的新长度。
+* 思路：法一：暴力双循环。法二：快慢指针，进行前后覆盖。[leetcode-27](.\leetcode\array\RemoveElement.cpp)
+* 要点：
+  * 数组元素在内存地址中是连续的，不能单独删除某个元素，只能**从后往前移动进行覆盖**。
+  * 保持快指针每一次循环都移动；慢指针只有快指针不等于目标值（此时进行覆盖操作）才移动。（**相当于每次循环快慢指针都移动，且交换；但快指针遇到目标值一次，慢指针的移动和交换就停滞依次**）
+  * 快指针位置的值等于目标值时，只有快指针移动；快指针位置的值不等于目标值时，快慢指针都移动。最终快慢指针的位置差刚好等于目标值出现的次数。
+  * 快指针到数组尾时循环结束。
