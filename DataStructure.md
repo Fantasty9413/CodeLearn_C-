@@ -463,7 +463,11 @@
 
 ### 0.哈希表基础
 
-* 哈希表常用数据结构：数据、set（集合）、map（映射）
+* 哈希表常用数据结构：数据、set（集合）、map（映射）。
+  * 用法总结：
+    * 元素去重使用集合set和unordered_set。
+    * 是键值对的话使用map和unordered_set。
+    * 如果要无重复元素就用普通容器和unordered容器；如果要有重复元素就用multi容器。
   * set：
   
     ![image-20220407174501355](C:\Users\96919\AppData\Roaming\Typora\typora-user-images\image-20220407174501355.png)
@@ -471,6 +475,23 @@
   * map：
   
     ![image-20220407174515533](C:\Users\96919\AppData\Roaming\Typora\typora-user-images\image-20220407174515533.png)
+    * map概念：关联式容器，存储的是pair对象（即一个键值-key和一个实值-value）。pair对象可以用pair模板进行创建`std::make_pair(string str, int num)`。一般采用字符串作为键的类型。
+    * 用法：
+
+      ```c++
+        map<int, string> stulist;                   // 键值（key）和实值（value）
+        stulist.insert(make_pair(1, "lqy"));        // make_pair构造键值对，然后插入
+        stulist.emplace(2, "lzp");                  // 利用emplace直接插入
+        stulist.emplace(3, "yhx");
+
+        int num = 2;
+        auto itr = stulist.find(num);               // find查找键值，返回键值对所在位置迭代器
+        cout << itr->second <<endl;
+
+        int count = stulist.count(num);             // 查找键值在map中出现的次数，最大为1，因为map中键值不允许重复
+      ```
+      * 要点：
+        * map中键值不允许重复，multimap中键值允许重复。
 
 ### 1.有效的字母异位词
 
@@ -492,3 +513,26 @@
   * 本质上对数组1和数组2都要去重，所以有两次去重。因此数组1要用unordered_set去重一次；记录的结果放在unordered_set中相当于再去重一次。
   * 利用自带的移动构造函数直接实现容器的转换。示例：`unordered_set<int> nums1_set(nums1.begin(), nums1.end());`和`vector<int> (result.begin(), result.end())`。
   * 利用unordered_set的find函数查看元素是否已经被记录。
+
+### 3.快乐数
+
+* 问题：编写一个算法来判断一个数 n 是不是快乐数。快乐数的定义：
+  * 对于一个正整数，每一次将该数替换为它每个位置上的数字的平方和。
+  * 然后重复这个过程直到这个数变为 1，也可能是 无限循环 但始终变不到 1。
+  * 如果这个过程 结果为 1，那么这个数就是快乐数。
+
+* 思路：利用平方和机制一直更新数字，通过是否出现重复数字判断这一过程是否进入死循环。具体手段是利用set记录每一次的更新数字，然后对比查找。
+
+* 要点：
+  * 利用集合的`count()`方法快速查找数字是否已经在集合中出现。
+  * 判断n是快乐数字，则直接true；判断n重复出现，则直接false。**先判断是不是快乐数，在判断是否重复出现。**
+
+### 4.两数之和
+
+* 问题：给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。
+
+* 思路：利用map存储实现。map的key存储数值；map的value存储数字在数组中的下标。每次判断target-nums[i]是否在map中。不在就将数字入map；在就返回结果。[示例](./leetcode/hashtable/TwoSum.cpp)
+
+* 要点：
+  * 入map的是nums中的数字。
+  * 判断元素是否在map中可以用find()返回itr；也可以用count()返回数量。但由于还要获取查找元素的value，因此采用第一种方法，然后用迭代器获取value（`itr->second`）。
