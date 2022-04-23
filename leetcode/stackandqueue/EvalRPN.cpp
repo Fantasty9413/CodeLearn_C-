@@ -23,7 +23,7 @@ public:
                 sta.pop();
                 int result;
                 if(s=="+") result = num1 + num2;
-                if(s=="-") result = num1 - num2;
+                if(s=="-") result = num2 - num1;        // 减数与被减数的关系
                 if(s=="*") result = num1 * num2;
                 if(s=="/") result = num2 / num1;        // 除数与被除数的关系
                 sta.push(result);
